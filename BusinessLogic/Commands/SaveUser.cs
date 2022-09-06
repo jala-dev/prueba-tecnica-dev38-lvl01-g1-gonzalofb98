@@ -32,8 +32,10 @@ namespace BusinessLogic.Commands
         {
             if(entity == null ||
                 entity.ID == 0 ||
-                entity.FirstName.Equals("") ||
-                entity.SecondName.Equals("")) 
+                    entity.FirstName.Length == 0 ||
+                    entity.SecondName.Length == 0 ||
+                    entity.FirstName.Length <= 4 ||
+                    entity.SecondName.Length <= 4)
             {
                 ErrorView errorView = new ErrorView();
                 errorView.ShowError($"No se pudo crear el nuevo socio, datos incompletos.");

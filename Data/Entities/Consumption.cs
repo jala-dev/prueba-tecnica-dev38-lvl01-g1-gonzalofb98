@@ -8,5 +8,7 @@ namespace Data.Entities
     {
         public int MemberID { get; set; }
         public int Value { get; set; }
+
+        public bool Paid = false;
     }
 }
