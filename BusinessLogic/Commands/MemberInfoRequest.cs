@@ -15,8 +15,17 @@ namespace BusinessLogic.Commands
             entity.ID = int.Parse(data.fields["CodigoSocio"]);
 
             Member member = new MemberRepository().GetMember(entity.ID);
-            
-            view.ShowResult(member.FirstName + " " + member.SecondName);
+
+            if (member is null)
+            {
+                ErrorView errorView = new ErrorView();
+                errorView.ShowError($"El código {entity.ID} no existe.");
+            }
+            else
+            {
+                view.ShowResult(member.FirstName + " " + member.SecondName);
+            }
+
         }
     }
 }
