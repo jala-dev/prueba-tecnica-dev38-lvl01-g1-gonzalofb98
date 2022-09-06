@@ -22,7 +22,7 @@ namespace BusinessLogic.Commands
 
             if (this.Validacion(entity))
             {
-                Member member = _repository.GetMember(entity.ID);
+                _repository.AddMember(entity);
                 view.ShowResult(entity.FirstName + " " + entity.SecondName);
             }
 
