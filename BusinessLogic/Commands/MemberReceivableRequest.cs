@@ -3,6 +3,7 @@ using Data;
 using Data.Entities;
 using Presentation;
 using Presentation.View;
+using System;
 using System.Collections.Generic;
 
 namespace BusinessLogic.Commands
@@ -17,11 +18,34 @@ namespace BusinessLogic.Commands
             Member entity = new Member();
             entity.ID = int.Parse(data.fields["CodigoSocio"]);
             
+            Member member = new MemberRepository().GetMember(entity.ID);
+
+            if (member is null)
+            {
+                ErrorView errorView = new ErrorView();
+                errorView.ShowError($"El código {entity.ID} no existe.");
+            }
+            else
+            {
             List<Consumption> memberConsumptions = new ConsumptionRepository().GetConsumptionByMember(entity);
 
-            double total = this.CalculateTotalReceivable(memberConsumptions);
+            double total = CalculateTotalReceivable(memberConsumptions);
+            int totalCube = CalculateTotalOfCubes(memberConsumptions);
 
-            view.ShowResult(total);            
+            view.ShowResult(entity.ID, totalCube, total);            
+
+            }
+
+        }
+
+        private int CalculateTotalOfCubes(List<Consumption> memberConsumptions)
+        {
+            int total = 0;
+            foreach(var consumption in memberConsumptions)
+            {
+                total+= consumption.Value;
+            }
+            return total;
         }
 
         private double CalculateTotalReceivable(List<Consumption> memberConsumptions)
