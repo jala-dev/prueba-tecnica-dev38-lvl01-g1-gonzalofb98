@@ -10,15 +10,16 @@ namespace BusinessLogic.Commands
 {
     public class MemberReceivableRequest: IWaterCommand
     {
-        double WaterPrice = 8.5;
+        double _waterPrice = 8.5;
+        MemberRepository _repository = new MemberRepository();
         public void Execute()
         {
             UserReceivableView view = new UserReceivableView();
             InputData data = view.RequestData();
             Member entity = new Member();
             entity.ID = int.Parse(data.fields["CodigoSocio"]);
-            
-            Member member = new MemberRepository().GetMember(entity.ID);
+
+            Member member = _repository.GetMember(entity.ID);
 
             if (member is null)
             {
@@ -27,15 +28,13 @@ namespace BusinessLogic.Commands
             }
             else
             {
-            List<Consumption> memberConsumptions = new ConsumptionRepository().GetConsumptionByMember(entity);
+                List<Consumption> memberConsumptions = new ConsumptionRepository().GetConsumptionByMember(entity);
 
-            double total = CalculateTotalReceivable(memberConsumptions);
-            int totalCube = CalculateTotalOfCubes(memberConsumptions);
+                double total = CalculateTotalReceivable(memberConsumptions);
+                int totalCube = CalculateTotalOfCubes(memberConsumptions);
 
-            view.ShowResult(entity.ID, totalCube, total);            
-
+                view.ShowResult(entity.ID, totalCube, total);            
             }
-
         }
 
         private int CalculateTotalOfCubes(List<Consumption> memberConsumptions)
@@ -53,7 +52,7 @@ namespace BusinessLogic.Commands
             double total = 0;
             foreach(Consumption item in memberConsumptions)
             {
-                total += item.Value * WaterPrice;
+                total += item.Value * _waterPrice;
             }
             return total;
         }

@@ -7,6 +7,7 @@ namespace BusinessLogic.Commands
 {
     class MemberInfoRequest
     {
+            MemberRepository _repository = new MemberRepository();
         public void Execute()
         {
             MemberInfoView view = new MemberInfoView();
@@ -14,7 +15,7 @@ namespace BusinessLogic.Commands
             Member entity = new Member();
             entity.ID = int.Parse(data.fields["CodigoSocio"]);
 
-            Member member = new MemberRepository().GetMember(entity.ID);
+            Member member = _repository.GetMember(entity.ID);
 
             if (member is null)
             {
