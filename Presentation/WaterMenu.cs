@@ -27,8 +27,9 @@ namespace Presentation
             Console.WriteLine("2. Consultar deuda de socio");
             Console.WriteLine("3. Consultar detalles del socio");
             Console.WriteLine("4. Registrar socio");
-            Console.WriteLine("5. Registrar pago");            
-            Console.WriteLine("6. Exit");
+            Console.WriteLine("5. Registrar pago");
+            Console.WriteLine("6. Informe de Socio");
+            Console.WriteLine("7. Exit");
             Console.WriteLine("======================================");
         }
     }

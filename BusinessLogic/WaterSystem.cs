@@ -1,6 +1,7 @@
 ﻿using BusinessLogic.Commands;
 using BusinessLogic.Core;
 using Presentation;
+using System;
 using System.Collections.Generic;
 
 namespace BusinessLogic
@@ -48,6 +49,9 @@ namespace BusinessLogic
                     break;
                 case 5:
                     new SavePayment().Execute();
+                    break;
+                case 6:
+                    new GenerateReport().Execute();
                     break;
                 default:
                     break;
